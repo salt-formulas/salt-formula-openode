@@ -1,0 +1,27 @@
+#!/bin/bash
+{%- set server = pillar.openode.server %}
+
+NAME="openode"
+DJANGODIR=/srv/openode/app
+USER=openode
+GROUP=openode
+NUM_WORKERS={{ server.workers }}
+DJANGO_SETTINGS_MODULE=openode.settings.local_settings
+DJANGO_WSGI_MODULE=openode.wsgi
+
+#echo "Starting $NAME as `whoami`"
+
+# Activate the virtual environment
+cd $DJANGODIR
+source /srv/openode/bin/activate
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+
+# Start your Django Unicorn
+# Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
+exec /srv/openode/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+  --name $NAME \
+  --workers $NUM_WORKERS \
+  --user=$USER --group=$GROUP \
+  --log-level=debug \
+  --bind={{ server.bind.address }}:{{ server.bind.port }}

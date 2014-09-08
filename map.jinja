@@ -1,0 +1,15 @@
+
+{% set server = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': [ 'git-core', 'gcc', 'tesseract-ocr', 'unpaper', 'python-virtualenv', 'ghostscript', 'libjpeg-dev', 'libpng-dev', 'poppler-utils', 'python-dev', 'libpq-dev', "tesseract-ocr-ces", "tesseract-ocr", "imagemagick", "graphicsmagick", "unpaper", "pdftohtml", "unoconv", "gettext" ]
+    },
+    'RedHat': {
+        'pkgs': []
+    },
+}, merge=salt['pillar.get']('openode:server')) %}
+
+
+{% set api = salt['grains.filter_by']({
+    'Debian': {},
+    'RedHat': {},
+}, merge=salt['pillar.get']('openode:api')) %}
