@@ -1,5 +1,7 @@
 {% from "openode/map.jinja" import server with context %}
 
+from openode.settings import * # import defaults
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -10,6 +12,26 @@ DATABASES = {
         'PORT': '{{ server.database.port }}',
     }
 }
+
+DEBUG = False
+
+DEBUG_SEND_EMAIL_NOTIFICATIONS = False
+
+SERVER_EMAIL = 'openode@robotice.cz'
+DEFAULT_FROM_EMAIL = 'openode@robotice.cz'
+EMAIL_HOST_USER = '{{ server.mail.user }}'
+EMAIL_HOST_PASSWORD = '{{ server.mail.password }}'
+EMAIL_SUBJECT_PREFIX = "[OPENode] "
+EMAIL_HOST = '{{ server.mail.host }}'
+EMAIL_PORT = '{{ server.mail.get('port', '25') }}'
+
+{%- if server.mail.get('ssl', False) %}
+EMAIL_USE_TLS = 'SSL',
+{%- endif %}
+{%- if server.mail.get('tls', False) %}
+EMAIL_USE_TLS: 'TLS',
+{%- endif %}
+
 # Your domain name
 DOMAIN_NAME = '{{ server.get("domain", "robotice") }}'
 

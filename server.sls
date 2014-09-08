@@ -94,6 +94,14 @@ openode_sync_database:
   - name: python manage.py syncdb --noinput
   - cwd: /srv/openode/site
 
+/srv/openode/site/server.wsgi:
+  file.managed:
+  - source: salt://openode/conf/server.wsgi
+  - template: jinja
+  - mode: 644
+  - require:
+    - file: /srv/openode/site/manage.py
+
 {#
 openode_migrate_database:
   cmd.run:
