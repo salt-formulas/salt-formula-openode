@@ -13,7 +13,7 @@ DATABASES = {
     }
 }
 
-DEBUG = False
+DEBUG = True
 
 DEBUG_SEND_EMAIL_NOTIFICATIONS = False
 
@@ -40,8 +40,6 @@ SECRET_KEY = '3#&ds&r_!m2bz+f&$37nlfb4t81t@^&ql6au4rolas(of0dq&s'
 
 # enable asynchronous calls
 CELERY_ALWAYS_EAGER = False
-
-DEBUG = False
 
 # mayan server IP
 DOCUMENT_SERVER_IP = "{{ server.mayan.get('host', '127.0.0.1') }}"

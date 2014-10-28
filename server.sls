@@ -11,7 +11,7 @@ openode_packages:
 
 /srv/openode:
   virtualenv.manage:
-  - system_site_packages: False
+  - system_site_packages: True
   - requirements: salt://openode/conf/requirements.txt
   - require:
     - pkg: openode_packages
@@ -20,8 +20,7 @@ openode_packages:
 openode_user:
   user.present:
   - name: openode
-  - system: True
-  - shell: /bin/sh
+  - shell: /bin/bash
   - home: /srv/openode
   - require:
     - virtualenv: /srv/openode
@@ -94,7 +93,7 @@ openode_sync_database:
   - name: python manage.py syncdb --noinput
   - cwd: /srv/openode/site
 
-/srv/openode/site/server.wsgi:
+/srv/openode/site/wsgi.py:
   file.managed:
   - source: salt://openode/conf/server.wsgi
   - template: jinja
@@ -102,7 +101,6 @@ openode_sync_database:
   - require:
     - file: /srv/openode/site/manage.py
 
-{#
 openode_migrate_database:
   cmd.run:
   - name: python manage.py compilemessages
@@ -112,12 +110,13 @@ openode_migrate_database:
 
 openode_collect_static:
   cmd.run:
+  - user: openode
+  - group: openode
   - name: python manage.py collectstatic --noinput
   - cwd: /srv/openode/site
   - require:
     - cmd: openode_sync_database
     - file: /srv/openode/static
-#}
 
 openode_web_service:
   supervisord.running:

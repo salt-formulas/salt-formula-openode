@@ -38,3 +38,6 @@ PSI==0.3b2
 gunicorn>=18.0
 
 Pyro4==4.17
+
+lamson==1.1
+nagios-nsca==1.1.0

@@ -5,7 +5,7 @@ sys.stdout = sys.stderr
 
 import os
 
-sys.path.append('/srv/openode/horizon')
+sys.path.append('/srv/openode/app')
 sys.path.append('/srv/openode/site')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'local_settings'
