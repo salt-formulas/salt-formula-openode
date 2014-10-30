@@ -1,5 +1,7 @@
 {% from "openode/map.jinja" import server with context %}
 
+from openode.settings import * # import defaults
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
