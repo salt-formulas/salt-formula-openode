@@ -1,7 +1,5 @@
 {% from "openode/map.jinja" import server with context %}
 
-from openode.settings import * # import defaults
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -54,6 +52,9 @@ DOCUMENT_URI_ID = "{{ server.mayan.uri_id }}"
 
 # mayan port, example.
 DOCUMENT_URI_PORT = {{ server.mayan.port }}
+
+MEDIA_ROOT = "/srv/openode/media"
+STATIC_ROOT = "/srv/openode/static"
 
 LOGGING = {
     'version': 1,
