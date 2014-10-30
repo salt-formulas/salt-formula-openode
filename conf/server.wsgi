@@ -8,7 +8,7 @@ import os
 sys.path.append('/srv/openode/app')
 sys.path.append('/srv/openode/site')
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'local_settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings_local'
 
 import django.core.handlers.wsgi
 
