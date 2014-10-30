@@ -45,8 +45,6 @@ openode_dirs:
 {{ server.source.address }}:
   git.latest:
   - target: /srv/openode/app
-  - user: openode
-  - group: openode
   - rev: {{ server.source.rev }}
   - require:
     - virtualenv: /srv/openode
