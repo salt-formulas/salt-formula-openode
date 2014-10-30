@@ -30,6 +30,12 @@ EMAIL_USE_TLS = 'SSL',
 EMAIL_USE_TLS: 'TLS',
 {%- endif %}
 
+IMAP_HOST = 'mail.robotice.cz'
+IMAP_HOST_USER = 'helpdesk@robotice.cz'
+IMAP_HOST_PASSWORD = 'openodeRobotice'
+IMAP_PORT = '993'
+IMAP_USE_TLS = True
+
 # Your domain name
 DOMAIN_NAME = '{{ server.get("domain", "robotice") }}'
 
