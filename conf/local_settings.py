@@ -41,6 +41,8 @@ SECRET_KEY = '3#&ds&r_!m2bz+f&$37nlfb4t81t@^&ql6au4rolas(of0dq&s'
 # enable asynchronous calls
 CELERY_ALWAYS_EAGER = False
 
+DEBUG = False
+
 # mayan server IP
 DOCUMENT_SERVER_IP = "{{ server.mayan.get('host', '127.0.0.1') }}"
 
@@ -52,3 +54,30 @@ DOCUMENT_URI_ID = "{{ server.mayan.uri_id }}"
 
 # mayan port, example.
 DOCUMENT_URI_PORT = {{ server.mayan.port }}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s:[%(asctime)s] <%(name)s|%(filename)s:%(lineno)s> %(message)s'
+        },
+    },
+
+    'handlers': {
+        'file_debug': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': "/srv/openode/logs/web.log",
+            'formatter': 'verbose',
+        },
+    },
+
+    'loggers': {
+        "": {
+            'handlers': ['file_debug'],
+            'level': 'INFO',
+        },
+    },
+}

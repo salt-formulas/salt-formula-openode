@@ -1,28 +1,21 @@
-#!/bin/bash
-{%- set server = pillar.openode.server %}
+#!/srv/openode/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'gunicorn==0.17.2','console_scripts','gunicorn_django'
+__requires__ = 'gunicorn==0.17.2'
+import sys
+from pkg_resources import load_entry_point
 
-NAME="openode"
-DJANGODIR=/srv/openode/site
-USER=openode
-GROUP=openode
-NUM_WORKERS={{ server.workers }}
-DJANGO_SETTINGS_MODULE=local_settings
-DJANGO_WSGI_MODULE=wsgi
 
-#echo "Starting $NAME as `whoami`"
+sys.stdout = sys.stderr
 
-# Activate the virtual environment
-cd $DJANGODIR
-source /srv/openode/bin/activate
-export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-export PYTHONPATH=$DJANGODIR:$PYTHONPATH
-#export PYTHONPATH=:/srv/openode/site
+import os
 
-# Start your Django Unicorn
-# Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
-exec /srv/openode/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
-  --name $NAME \
-  --workers $NUM_WORKERS \
-  --user=$USER --group=$GROUP \
-  --log-level=debug \
-  --bind={{ server.bind.address }}:{{ server.bind.port }}
+sys.path.append('/srv/openode/app')
+sys.path.append('/srv/openode/site')
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'openode.settings'
+
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('gunicorn==0.17.2', 'console_scripts', 'gunicorn_django')()
+    )

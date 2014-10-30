@@ -15,6 +15,7 @@ openode_packages:
   - requirements: salt://openode/conf/requirements.txt
   - require:
     - pkg: openode_packages
+    - file: openode_dirs
     - pkg: git_packages
 
 openode_user:
@@ -22,12 +23,16 @@ openode_user:
   - name: openode
   - shell: /bin/bash
   - home: /srv/openode
+  - user: openode
+  - group: openode
   - require:
     - virtualenv: /srv/openode
 
 openode_dirs:
   file.directory:
   - names:
+    - /srv/openode
+    - /srv/openode/app
     - /srv/openode/static
     - /srv/openode/media
     - /srv/openode/logs
@@ -36,12 +41,12 @@ openode_dirs:
   - group: openode
   - mode: 775
   - makedirs: true
-  - require:
-    - virtualenv: /srv/openode
 
 {{ server.source.address }}:
   git.latest:
   - target: /srv/openode/app
+  - user: openode
+  - group: openode
   - rev: {{ server.source.rev }}
   - require:
     - virtualenv: /srv/openode
@@ -62,7 +67,15 @@ app_dirs:
   - require:
     - virtualenv: /srv/openode
 
-/srv/openode/bin/gunicorn_start:
+/srv/openode/logs/web.log:
+  file.managed:
+  - mode: 700
+  - user: openode
+  - group: openode
+  - require:
+    - virtualenv: /srv/openode
+
+/srv/openode/bin/gunicorn_django:
   file.managed:
   - source: salt://openode/conf/gunicorn_start
   - mode: 700
@@ -80,7 +93,7 @@ app_dirs:
   - require:
     - git: {{ server.source.address }}
 
-/srv/openode/site/local_settings.py:
+/srv/openode/site/settings_local.py:
   file.managed:
   - source: salt://openode/conf/local_settings.py
   - template: jinja
@@ -117,12 +130,13 @@ openode_collect_static:
   - require:
     - cmd: openode_sync_database
     - file: /srv/openode/static
-
+{#
 openode_web_service:
   supervisord.running:
   - names:
     - openode_server
   - restart: True
-  - user: root
+  - user: openode
+#}
 
 {%- endif %}
