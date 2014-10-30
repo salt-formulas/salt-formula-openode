@@ -64,6 +64,18 @@ DOCUMENT_URI_PORT = {{ server.mayan.port }}
 MEDIA_ROOT = "/srv/openode/media"
 STATIC_ROOT = "/srv/openode/static"
 
+DOCUMENT_ROOT = os.path.join(MEDIA_ROOT, 'documents/')
+DOCUMENT_URL = '%sdocuments/' % MEDIA_URL
+
+WYSIWYG_NODE_ROOT = os.path.join(MEDIA_ROOT, 'wysiwyg_node/')
+WYSIWYG_NODE_URL = '%swysiwyg_node/' % MEDIA_URL
+
+WYSIWYG_THREAD_ROOT = os.path.join(MEDIA_ROOT, 'wysiwyg_thread/')
+WYSIWYG_THREAD_URL = '%swysiwyg_thread/' % MEDIA_URL
+
+ORGANIZATION_LOGO_ROOT = os.path.join(MEDIA_ROOT, 'organization_logos/')
+ORGANIZATION_LOGO_URL = '%sorganization_logos/' % MEDIA_URL
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
