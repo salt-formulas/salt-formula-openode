@@ -1,0 +1,25 @@
+{% from "openode/map.jinja" import server with context %}
+
+#!{{ server.dir.base }}/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT:
+# 'gunicorn==0.17.2','console_scripts','gunicorn_django'
+__requires__ = 'gunicorn==0.17.2'
+import sys
+from pkg_resources import load_entry_point
+
+
+sys.stdout = sys.stderr
+
+import os
+
+sys.path.append('{{ server.dir.base }}/app')
+sys.path.append('{{ server.dir.base }}/site')
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'openode.settings'
+
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('gunicorn==0.17.2',
+                         'console_scripts', 'gunicorn_django')()
+    )

@@ -61,8 +61,8 @@ DOCUMENT_URI_ID = "{{ server.mayan.uri_id }}"
 # mayan port, example.
 DOCUMENT_URI_PORT = {{ server.mayan.port }}
 
-MEDIA_ROOT = "/srv/openode/media"
-STATIC_ROOT = "/srv/openode/static"
+MEDIA_ROOT = "{{ server.dir.base }}/media"
+STATIC_ROOT = "{{ server.dir.base }}/static"
 
 DOCUMENT_ROOT = os.path.join(MEDIA_ROOT, 'documents/')
 DOCUMENT_URL = '%sdocuments/' % MEDIA_URL
@@ -90,7 +90,7 @@ LOGGING = {
         'file_debug': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': "/srv/openode/logs/web.log",
+            'filename': "/var/log/openode/web.log",
             'formatter': 'verbose',
         },
     },

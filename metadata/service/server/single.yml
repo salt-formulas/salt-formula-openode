@@ -1,0 +1,30 @@
+applications:
+- openode
+parameters:
+  openode:
+    server:
+      enabled: true
+      workers: 3
+      bind:
+        address: 0.0.0.0
+        port: 9753
+      source:
+        type: git
+        address: https://github.com/openode/openode.git
+        rev: master
+      database:
+        engine: 'postgresql'
+        host: 'localhost'
+        port: 5432
+        name: 'openode'
+        password: 'pass'
+        user: 'openode'
+      mayan:
+        hmac_key: hmac_key
+        uri_id: uri_id
+        port: 33333
+        host: 127.0.0.1
+      mail:
+        host: mail.highline.cz
+        password: Bender240
+        user: robot@highline.cz
