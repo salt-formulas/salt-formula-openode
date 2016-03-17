@@ -1,6 +1,6 @@
-============
+=======
 OPENODE
-============
+=======
 
 OPENode is open source web application for communities seeking answers for diverse problems in commercial, public or voluntary sectors. Based on flexible communication in nodes it helps to find solutions effectively and build smarter knowledgebase. It enables users to:
 
