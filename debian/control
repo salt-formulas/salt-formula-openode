@@ -10,6 +10,6 @@ Vcs-Git: https://github.com/tcpcloud/salt-formula-openode.git
 
 Package: salt-formula-openode
 Architecture: all
-Depends: ${misc:Depends}, salt-master, reclass
+Depends: ${misc:Depends}
 Description: Openode salt formula
  Install and configure Openode service.
